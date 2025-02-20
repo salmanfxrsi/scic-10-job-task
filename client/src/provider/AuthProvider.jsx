@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import {
   createUserWithEmailAndPassword,
-  GithubAuthProvider,
+  // GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -10,14 +10,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import auth from "../firebase/firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import auth from "../firebase/firebase.config";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const googleAuthProvider = new GoogleAuthProvider();
-  const githubAuthProvider = new GithubAuthProvider();
+  // const githubAuthProvider = new GithubAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
@@ -41,10 +41,10 @@ const AuthProvider = ({ children }) => {
   };
 
   //   signIn user using github
-  const githubSignIn = () => {
-    setLoading(true);
-    return signInWithPopup(auth, githubAuthProvider);
-  };
+  // const githubSignIn = () => {
+  //   setLoading(true);
+  //   return signInWithPopup(auth, githubAuthProvider);
+  // };
 
   //   signOut user
   const customSignOut = () => {
@@ -62,18 +62,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-
-      if (currentUser) {
-        // get token and store it in local storage
-        const userInfo = { email: currentUser.email };
-        axiosPublic.post("/jwt", userInfo).then((res) => {
-          if (res.data.token) {
-            localStorage.setItem("access-token", res.data.token);
-          }
-        });
-      } else {
-        localStorage.removeItem("access-token");
-      }
       setLoading(false);
     });
     return () => {
@@ -89,7 +77,6 @@ const AuthProvider = ({ children }) => {
     signUp,
     signIn,
     googleSignIn,
-    githubSignIn,
     signOut: customSignOut,
     updateUserProfile,
   };
