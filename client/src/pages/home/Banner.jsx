@@ -1,4 +1,9 @@
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+
 const Banner = () => {
+  const { googleSignIn, user, signOut } = useAuth();
+
   return (
     <div
       className="hero min-h-screen"
@@ -14,7 +19,22 @@ const Banner = () => {
           {/* <p className="mb-5">
             Organizes, tracks, and prioritizes tasks for efficient productivity
           </p> */}
-          <button className="btn btn-primary mt-4">Get Started</button>
+          <div className="flex justify-center gap-6">
+            {user ? (
+              <Link to="/dashboard" className="btn btn-primary mt-4">
+                Get Started
+              </Link>
+            ) : (
+              <button className="btn btn-primary mt-4" onClick={googleSignIn}>
+                Login Now
+              </button>
+            )}
+            {user && (
+              <button className="btn btn-primary mt-4" onClick={signOut}>
+                Logout
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
