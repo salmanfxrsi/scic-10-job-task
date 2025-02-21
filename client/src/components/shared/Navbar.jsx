@@ -1,15 +1,17 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { signOut } = useAuth();
+
   const navLink = (
     <>
-      <NavLink className="font-medium uppercase">Home</NavLink>
-      <NavLink className="font-medium uppercase">Add Task</NavLink>
+      
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-primary shadow-sm text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,8 +46,9 @@ const Navbar = () => {
         <div className="menu menu-horizontal px-1 flex gap-8">{navLink}</div>
       </div>
       <div className="navbar-end flex gap-2">
-        <Link className="font-bold uppercase btn">Login</Link>
-        <Link className="font-bold uppercase btn">SignUp</Link>
+        <button onClick={signOut} className="font-bold uppercase btn">
+          Logout
+        </button>
       </div>
     </div>
   );

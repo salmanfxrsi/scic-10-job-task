@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Banner = () => {
-  const { googleSignIn, user, signOut } = useAuth();
+  const { googleSignIn, user } = useAuth();
 
   return (
     <div
@@ -27,11 +27,6 @@ const Banner = () => {
             ) : (
               <button className="btn btn-primary mt-4" onClick={googleSignIn}>
                 Login Now
-              </button>
-            )}
-            {user && (
-              <button className="btn btn-primary mt-4" onClick={signOut}>
-                Logout
               </button>
             )}
           </div>
