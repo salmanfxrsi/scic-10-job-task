@@ -45,6 +45,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
                 type="text"
                 name="title"
                 className="pl-4 py-2 rounded-md border w-full mt-2 "
+                maxLength={50}
               />
             </Field>
             <Field>
@@ -53,6 +54,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
                 type="text"
                 name="description"
                 className="pl-4 py-2 rounded-md border w-full mt-2 "
+                maxLength={200}
               />
             </Field>
             <div className="items-center gap-4">
