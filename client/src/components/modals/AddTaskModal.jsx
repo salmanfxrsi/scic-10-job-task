@@ -1,17 +1,28 @@
 import { Dialog, Field, Label, Input, Textarea } from "@headlessui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
   const [selected, setSelected] = useState("todo");
+  const axiosPublic = useAxiosPublic();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
     const status = selected;
-    const task = { title, description, status };
-    console.log(task);
+    const time = new Date();
+    const task = { title, description, status, time };
+    try {
+      const result = await axiosPublic.post("/tasks", task);
+      if (result.data.acknowledged) {
+        form.reset();
+        setIsOpen(false);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
