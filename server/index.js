@@ -26,8 +26,30 @@ const client = new MongoClient(uri, {
 
 async function run() {
   const taskCollection = client.db("scic-10-job-task").collection("tasks");
+  const userCollection = client.db("scic-10-job-task").collection("users");
 
   try {
+    // user related api
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const email = user.email;
+      const query = { email: email };
+
+      // check if the user is already exist
+      const isExist = await userCollection.findOne(query);
+
+      if (isExist) {
+        return res.send(isExist);
+      }
+
+      const result = await userCollection.insertOne({
+        ...user,
+        timestamp: Date.now(),
+      });
+      res.send(result);
+    });
+
+    // task related api
     app.get("/tasks", async (req, res) => {
       const email = req.query.email;
       const filter = { email };
