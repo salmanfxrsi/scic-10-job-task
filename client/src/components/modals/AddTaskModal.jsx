@@ -5,7 +5,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
 const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
   const { user } = useAuth();
-  const [selected, setSelected] = useState("todo");
+  const [selected, setSelected] = useState("toDo");
   const axiosPublic = useAxiosPublic();
 
   const handleSubmit = async (e) => {

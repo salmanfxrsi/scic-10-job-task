@@ -5,6 +5,7 @@ import TaskCard from "../../components/taskCard";
 
 const ToDoTask = ({ tasks, refetch }) => {
   let [isOpen, setIsOpen] = useState(false);
+  console.log(tasks)
 
   return (
     <div className="bg-primary p-12 w-full">

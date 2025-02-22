@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Banner = () => {
   const { googleSignIn, user } = useAuth();
+  const axiosPublic = useAxiosPublic();
+
+  //   google login
+  const handleGoogleLogin = async () => {
+    googleSignIn()
+      .then(async (result) => {
+        await axiosPublic.post("/users", {
+          email: result.user?.email,
+          name: result.user?.displayName,
+          image: result.user?.photoURL,
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <div
@@ -25,7 +42,7 @@ const Banner = () => {
                 Get Started
               </Link>
             ) : (
-              <button className="btn btn-primary mt-4" onClick={googleSignIn}>
+              <button className="btn btn-primary mt-4" onClick={handleGoogleLogin}>
                 Login Now
               </button>
             )}
