@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Banner = () => {
   const { googleSignIn, user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   //   google login
   const handleGoogleLogin = async () => {
@@ -15,6 +16,7 @@ const Banner = () => {
           name: result.user?.displayName,
           image: result.user?.photoURL,
         });
+        navigate("/dashboard")
       })
       .catch((error) => {
         alert(error.message);
@@ -42,7 +44,10 @@ const Banner = () => {
                 Get Started
               </Link>
             ) : (
-              <button className="btn btn-primary mt-4" onClick={handleGoogleLogin}>
+              <button
+                className="btn btn-primary mt-4"
+                onClick={handleGoogleLogin}
+              >
                 Login Now
               </button>
             )}
