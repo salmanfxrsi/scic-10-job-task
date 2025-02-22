@@ -2,9 +2,10 @@ import { Dialog, Field, Label, Input, Textarea } from "@headlessui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
-  const [selected, setSelected] = useState("todo");
+const EditTaskModal = ({ isOpen, setIsOpen, refetch, task }) => {
+  const [selected, setSelected] = useState(task?.status);
   const axiosPublic = useAxiosPublic();
+  const { _id } = task;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,15 +13,12 @@ const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
     const title = form.title.value;
     const description = form.description.value;
     const status = selected;
-    const time = new Date();
-    const task = { title, description, status, time };
+    const task = { title, description, status };
+
     try {
-      const result = await axiosPublic.post("/tasks", task);
-      if (result.data.acknowledged) {
-        form.reset();
-        setIsOpen(false);
-        refetch();
-      }
+      await axiosPublic.patch(`/tasks/${_id}`, task);
+      refetch();
+      setIsOpen(false);
     } catch (err) {
       alert(err.message);
     }
@@ -45,6 +43,7 @@ const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
                 type="text"
                 name="title"
                 className="pl-4 py-2 rounded-md border w-full mt-2 "
+                defaultValue={task?.title}
                 maxLength={50}
               />
             </Field>
@@ -54,6 +53,7 @@ const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
                 type="text"
                 name="description"
                 className="pl-4 py-2 rounded-md border w-full mt-2 "
+                defaultValue={task?.description}
                 maxLength={200}
               />
             </Field>
@@ -64,7 +64,8 @@ const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
               <select
                 id="options"
                 className="p-2 border border-gray-300 rounded-md w-full mt-2"
-                value={selected}
+                defaultValue={task?.status}
+                // value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >
                 <option defaultValue={selected} disabled>
@@ -85,7 +86,7 @@ const EditTaskModal = ({ isOpen, setIsOpen, refetch }) => {
                 Cancel
               </button>
               <button type="submit" className="btn btn-primary">
-                Add Now
+                Edit Now
               </button>
             </div>
           </form>
@@ -100,6 +101,7 @@ EditTaskModal.propTypes = {
   setIsOpen: PropTypes.func,
   bookedSession: PropTypes.object,
   refetch: PropTypes.func,
+  task: PropTypes.object,
 };
 
 export default EditTaskModal;

@@ -29,7 +29,9 @@ async function run() {
 
   try {
     app.get("/tasks", async (req, res) => {
-      const tasks = await taskCollection.find().toArray();
+      const email = req.query.email;
+      const filter = { email };
+      const tasks = await taskCollection.find(filter).toArray();
       res.send(tasks);
     });
 
@@ -61,6 +63,7 @@ async function run() {
         $set: {
           title: updatedTask.title,
           description: updatedTask.description,
+          status: updatedTask.status,
         },
       };
       const result = await taskCollection.updateOne(query, updatedDoc);

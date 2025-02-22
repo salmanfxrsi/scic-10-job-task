@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import EditTaskModal from "./modals/EditTaskModal";
+import { useState } from "react";
 
 const TaskCard = ({ task, refetch }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const axiosPublic = useAxiosPublic();
 
   // task delete functionality
@@ -20,7 +23,9 @@ const TaskCard = ({ task, refetch }) => {
         <h2 className="card-title">{task?.title}</h2>
         <p>{task?.description}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Edit Now</button>
+          <button onClick={() => setIsOpen(true)} className="btn btn-primary">
+            Edit Now
+          </button>
           <button
             onClick={() => handleDelete(task._id)}
             className="btn bg-red-500 text-white"
@@ -29,6 +34,12 @@ const TaskCard = ({ task, refetch }) => {
           </button>
         </div>
       </div>
+      <EditTaskModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        refetch={refetch}
+        task={task}
+      ></EditTaskModal>
     </div>
   );
 };

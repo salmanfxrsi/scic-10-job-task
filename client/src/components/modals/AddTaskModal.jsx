@@ -2,7 +2,9 @@ import { Dialog, Field, Label, Input, Textarea } from "@headlessui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
 const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
+  const { user } = useAuth();
   const [selected, setSelected] = useState("todo");
   const axiosPublic = useAxiosPublic();
 
@@ -12,8 +14,9 @@ const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
     const title = form.title.value;
     const description = form.description.value;
     const status = selected;
+    const email = user.email;
     const time = new Date();
-    const task = { title, description, status, time };
+    const task = { title, description, status, time, email };
     try {
       const result = await axiosPublic.post("/tasks", task);
       if (result.data.acknowledged) {

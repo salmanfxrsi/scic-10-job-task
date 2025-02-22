@@ -6,8 +6,10 @@ import InProgressTask from "./InProgressTask";
 import ToDoTask from "./ToDoTask";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Loading from "../../components/Loading";
+import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
 
   const {
@@ -15,16 +17,16 @@ const Dashboard = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["tasks", user.email],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/tasks");
+      const { data } = await axiosPublic.get(`/tasks?email=${user.email}`);
       return data;
     },
   });
 
   if (isLoading) return <Loading />;
 
-  const toDoTasks = tasks.filter((task) => task.status === "todo");
+  const toDoTasks = tasks.filter((task) => task.status === "toDo");
   const inProgressTasks = tasks.filter((task) => task.status === "inProgress");
   const doneTasks = tasks.filter((task) => task.status === "done");
 
