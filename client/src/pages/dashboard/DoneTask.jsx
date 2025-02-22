@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import TaskCard from "../../components/taskCard";
 
 const DoneTask = ({ tasks }) => {
   return (
@@ -7,15 +8,7 @@ const DoneTask = ({ tasks }) => {
         Completed Task ({tasks.length})
       </h1>
       {tasks.map((task) => (
-        <div key={task._id} className="card text-black w-96 mt-6 bg-white">
-          <div className="card-body">
-            <h2 className="card-title">{task.title}</h2>
-            <p>{task.description}</p>
-            <div className="card-actions justify-end">
-              <button className="btn">Buy Now</button>
-            </div>
-          </div>
-        </div>
+        <TaskCard key={task._id} task={task}></TaskCard>
       ))}
     </div>
   );

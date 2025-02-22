@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import AddTaskModal from "../../components/modals/AddTaskModal";
+import TaskCard from "../../components/taskCard";
 
 const ToDoTask = ({ tasks, refetch }) => {
   let [isOpen, setIsOpen] = useState(false);
@@ -16,18 +17,14 @@ const ToDoTask = ({ tasks, refetch }) => {
         </button>
       </div>
       {tasks.map((task) => (
-        <div key={task._id} className="card text-black w-96 mt-6 bg-white">
-          <div className="card-body">
-            <h2 className="card-title">{task.title}</h2>
-            <p>{task.description}</p>
-            <div className="card-actions justify-end">
-              <button className="btn">Buy Now</button>
-            </div>
-          </div>
-        </div>
+        <TaskCard key={task._id} task={task}></TaskCard>
       ))}
       {/* Add Task Modal */}
-      <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} refetch={refetch}></AddTaskModal>
+      <AddTaskModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        refetch={refetch}
+      ></AddTaskModal>
     </div>
   );
 };
