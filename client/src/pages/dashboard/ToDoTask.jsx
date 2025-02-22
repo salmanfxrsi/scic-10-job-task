@@ -1,4 +1,9 @@
+import { useState } from "react";
+import AddTaskModal from "../../components/modals/AddTaskModal";
+
 const ToDoTask = () => {
+  let [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -8,7 +13,14 @@ const ToDoTask = () => {
             <th>TODO</th>
             <th></th>
             <th></th>
-            <th className="btn btn-primary">Add Task</th>
+            <th className="">
+              <button
+                className="btn btn-primary"
+                onClick={() => setIsOpen(true)}
+              >
+                Add Task
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +47,8 @@ const ToDoTask = () => {
           </tr>
         </tbody>
       </table>
+      {/* Add Task Modal */}
+      <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen}></AddTaskModal>
     </div>
   );
 };
