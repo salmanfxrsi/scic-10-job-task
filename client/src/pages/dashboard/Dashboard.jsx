@@ -35,7 +35,7 @@ const Dashboard = () => {
       <nav>
         <Navbar></Navbar>
       </nav>
-      <main className="py-24 grid lg:grid-cols-3 grid-cols-1 container mx-auto gap-12 justify-between">
+      <main className="py-24 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 container mx-auto gap-12 justify-between min-h-screen">
         <ToDoTask tasks={toDoTasks} refetch={refetch}></ToDoTask>
         <InProgressTask
           tasks={inProgressTasks}
