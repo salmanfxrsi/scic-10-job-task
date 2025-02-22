@@ -25,9 +25,20 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
+    const taskCollection = client.db("scic-10-job-task").collection("tasks")
 
   try {
-    
+    app.get("/tasks", async (req, res) => {
+      const tasks = await taskCollection.find().toArray();
+      res.send(tasks);
+    });
+
+    app.post("/tasks", async (req, res) => {
+      const task = req.body;
+      const results = await taskCollection.insertOne(task);
+      res.send(results);
+    });
+
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
