@@ -25,7 +25,7 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
-    const taskCollection = client.db("scic-10-job-task").collection("tasks")
+  const taskCollection = client.db("scic-10-job-task").collection("tasks");
 
   try {
     app.get("/tasks", async (req, res) => {
