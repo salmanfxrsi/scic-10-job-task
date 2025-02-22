@@ -17,7 +17,7 @@ const ToDoTask = ({ tasks, refetch }) => {
         </button>
       </div>
       {tasks.map((task) => (
-        <TaskCard key={task._id} task={task}></TaskCard>
+        <TaskCard key={task._id} task={task} refetch={refetch}></TaskCard>
       ))}
       {/* Add Task Modal */}
       <AddTaskModal

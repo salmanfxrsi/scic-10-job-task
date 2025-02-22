@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import TaskCard from "../../components/taskCard";
 
-const DoneTask = ({ tasks }) => {
+const DoneTask = ({ tasks, refetch }) => {
   return (
     <div className="bg-primary p-12 w-full">
       <h1 className="text-white font-bold text-2xl text-center mb-12">
         Completed Task ({tasks.length})
       </h1>
       {tasks.map((task) => (
-        <TaskCard key={task._id} task={task}></TaskCard>
+        <TaskCard key={task._id} task={task} refetch={refetch}></TaskCard>
       ))}
     </div>
   );
@@ -16,6 +16,7 @@ const DoneTask = ({ tasks }) => {
 
 DoneTask.propTypes = {
   tasks: PropTypes.array,
+  refetch: PropTypes.func,
 };
 
 export default DoneTask;
