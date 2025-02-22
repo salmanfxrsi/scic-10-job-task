@@ -1,56 +1,39 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import AddTaskModal from "../../components/modals/AddTaskModal";
 
-const ToDoTask = () => {
+const ToDoTask = ({ tasks }) => {
   let [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>TODO</th>
-            <th></th>
-            <th></th>
-            <th className="">
-              <button
-                className="btn btn-primary"
-                onClick={() => setIsOpen(true)}
-              >
-                Add Task
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-          <tr className="bg-base-200">
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="bg-primary p-12 w-full">
+      <div className="flex justify-between">
+        <h1 className="text-white font-bold text-2xl text-center mb-12">
+          ToDo Task ({tasks.length})
+        </h1>
+        <button onClick={() => setIsOpen(true)} className="btn">
+          Add Task
+        </button>
+      </div>
+      {tasks.map((task) => (
+        <div key={task._id} className="card text-black w-96 mt-6 bg-white">
+          <div className="card-body">
+            <h2 className="card-title">{task.title}</h2>
+            <p>{task.description}</p>
+            <div className="card-actions justify-end">
+              <button className="btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      ))}
       {/* Add Task Modal */}
       <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen}></AddTaskModal>
     </div>
   );
+};
+
+ToDoTask.propTypes = {
+  tasks: PropTypes.array,
 };
 
 export default ToDoTask;
