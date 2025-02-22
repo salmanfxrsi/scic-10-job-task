@@ -48,9 +48,9 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Lumeno's server is running...");
+  res.send("server is running...");
 });
 
 app.listen(port, () => {
-  console.log(`Lumeno's server is running on ${port}`);
+  console.log(`server is running on ${port}`);
 });
