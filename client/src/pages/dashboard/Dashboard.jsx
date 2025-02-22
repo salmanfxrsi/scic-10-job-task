@@ -10,7 +10,7 @@ import Loading from "../../components/Loading";
 const Dashboard = () => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: tasks, isLoading } = useQuery({
+  const { data: tasks, isLoading, refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const { data } = await axiosPublic.get("/tasks");
@@ -30,7 +30,7 @@ const Dashboard = () => {
         <Navbar></Navbar>
       </nav>
       <main className="py-24 grid lg:grid-cols-3 grid-cols-1 container mx-auto gap-12 justify-between">
-        <ToDoTask tasks={toDoTasks}></ToDoTask>
+        <ToDoTask tasks={toDoTasks} refetch={refetch}></ToDoTask>
         <InProgressTask tasks={inProgressTasks}></InProgressTask>
         <DoneTask tasks={doneTasks}></DoneTask>
       </main>

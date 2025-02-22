@@ -2,7 +2,7 @@ import { Dialog, Field, Label, Input, Textarea } from "@headlessui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-const AddTaskModal = ({ isOpen, setIsOpen }) => {
+const AddTaskModal = ({ isOpen, setIsOpen, refetch }) => {
   const [selected, setSelected] = useState("todo");
   const axiosPublic = useAxiosPublic();
 
@@ -19,6 +19,7 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
       if (result.data.acknowledged) {
         form.reset();
         setIsOpen(false);
+        refetch();
       }
     } catch (err) {
       alert(err.message);

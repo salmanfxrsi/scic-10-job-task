@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import AddTaskModal from "../../components/modals/AddTaskModal";
 
-const ToDoTask = ({ tasks }) => {
+const ToDoTask = ({ tasks, refetch }) => {
   let [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -27,13 +27,14 @@ const ToDoTask = ({ tasks }) => {
         </div>
       ))}
       {/* Add Task Modal */}
-      <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen}></AddTaskModal>
+      <AddTaskModal isOpen={isOpen} setIsOpen={setIsOpen} refetch={refetch}></AddTaskModal>
     </div>
   );
 };
 
 ToDoTask.propTypes = {
   tasks: PropTypes.array,
+  refetch: PropTypes.func,
 };
 
 export default ToDoTask;
